@@ -1,6 +1,6 @@
 import os
 
-def get_files_info(working_directory, directory="."):
+def get_files_info(working_directory: str, directory: str="."):
     try:
         working_dir_abs = os.path.abspath(working_directory) #est the true, fixed working_dir boundary
         full_path = os.path.abspath(os.path.join(working_directory, directory)) #joins incoming dir to work_dir, and then sets it as fixed/abs path
@@ -17,7 +17,7 @@ def get_files_info(working_directory, directory="."):
             entry_path = os.path.join(full_path, entry)
             entry_size = os.path.getsize(entry_path)
             entry_isdir = os.path.isdir(entry_path)
-            lines.append(f"- {entry}: file_size={entry_size} bytes, is_dir={entry_isdir}")
-        return "\n".join(lines)
+            lines.append(f"- {entry}: file_size={entry_size} bytes, is_dir={entry_isdir}") # type: ignore
+        return "\n".join(lines) # type: ignore
     except Exception as e:
         return f"Error: {e}"
