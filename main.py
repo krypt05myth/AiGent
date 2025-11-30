@@ -2,6 +2,7 @@ import os
 import sys
 import argparse
 from config import SYSTEM_PROMPT
+from schema import schema_get_files_info
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
@@ -39,12 +40,26 @@ def main():
             types.Part(text=contents)
         ])
     ]
+    
+    available_functions = types.Tool(
+    function_declarations=[
+        schema_get_files_info,
+    ]
+)  
     generated_content = client.models.generate_content(
         model=model, 
         contents=messages, 
-        config=types.GenerateContentConfig(system_instruction=SYSTEM_PROMPT)
+        config=types.GenerateContentConfig(
+            tools=[available_functions],
+            system_instruction=SYSTEM_PROMPT
+            )
         )
-    print(generated_content.text)
+    gc_fc = generated_content.function_calls
+    if gc_fc:
+        for ea in gc_fc:
+            print(f"Calling function: {ea.name}({ea.args})")
+    else:
+        print(generated_content.text)
     tokens_used = generated_content.usage_metadata
     if "--verbose" in sys.argv:
        print(f"Prompt tokens: {tokens_used.prompt_token_count}")

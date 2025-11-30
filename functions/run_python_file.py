@@ -1,6 +1,14 @@
 import os
 import subprocess
+"""
+PURPOSE: Executes a Python file (script) using the 'python3' interpreter
+and captures its standard output (STDOUT) and standard error (STDERR).
 
+SECURITY: Enforces the working_directory boundary check and verifies 
+the file is a .py script. It uses subprocess.run with a timeout (30s)
+to prevent infinite execution and sets cwd to os.path.dirname(full_path_file)
+to ensure the script executes securely within its containing directory.
+"""
 def run_python_file(working_directory: str, file_path: str, args=[]):
     try:
         working_dir_abs = os.path.abspath(working_directory) # type: ignore #est the true, fixed working_dir boundary

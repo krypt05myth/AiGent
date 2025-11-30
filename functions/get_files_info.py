@@ -1,5 +1,14 @@
 import os
+"""
+PURPOSE: Retrieves a list of files and directories within a specified path 
+relative to the working directory. It gathers file size and directory status 
+for each entry.
 
+SECURITY: Uses absolute path resolution (os.path.abspath) and a critical
+boundary check (full_path.startswith(working_dir_abs)) to prevent directory
+traversal attacks (e.g., '..'-based attempts to access files outside the 
+allowed 'working_directory' sandbox).
+"""
 def get_files_info(working_directory: str, directory: str="."):
     try:
         working_dir_abs = os.path.abspath(working_directory) #est the true, fixed working_dir boundary

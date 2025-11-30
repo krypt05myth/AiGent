@@ -1,5 +1,13 @@
 import os
+"""
+PURPOSE: Overwrites the contents of a file with a new string. 
+It creates the file if it does not exist.
 
+SECURITY: Enforces the working_directory boundary check to prevent writing
+outside the sandbox. Uses 'w' (write) mode in the context manager (with open) 
+to ensure atomic file creation/overwriting and safe file closure, guaranteeing
+that the write operation is confirmed by the returned character count.
+"""
 def write_file(working_directory: str, file_path: str, content: str):
     try:
         working_dir_abs = os.path.abspath(working_directory) # type: ignore #est the true, fixed working_dir boundary

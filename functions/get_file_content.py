@@ -1,6 +1,15 @@
 import os
 from config import MAX_CHARS
+"""
+PURPOSE: Reads and returns the textual content of a single file. 
+It includes safeguards for file existence and size limitation.
 
+SECURITY: Enforces the working_directory boundary check and verifies 
+that the path points to a regular file (os.path.isfile). It uses 
+with open(...) to ensure safe automatic file closing and reads up to 
+MAX_CHARS (10000) with a truncation warning to prevent resource exhaustion 
+on large files.
+"""
 def get_file_content(working_directory: str, file_path: str):
     try:
         working_dir_abs = os.path.abspath(working_directory) # type: ignore #est the true, fixed working_dir boundary
