@@ -1,6 +1,7 @@
 import os
 import sys
-import argparse 
+import argparse
+from config import SYSTEM_PROMPT
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
@@ -38,7 +39,11 @@ def main():
             types.Part(text=contents)
         ])
     ]
-    generated_content = client.models.generate_content(model=model, contents=messages)
+    generated_content = client.models.generate_content(
+        model=model, 
+        contents=messages, 
+        config=types.GenerateContentConfig(system_instruction=SYSTEM_PROMPT)
+        )
     print(generated_content.text)
     tokens_used = generated_content.usage_metadata
     if "--verbose" in sys.argv:
