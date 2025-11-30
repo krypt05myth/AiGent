@@ -2,7 +2,7 @@ import os
 import sys
 import argparse
 from config import SYSTEM_PROMPT
-from schema import schema_get_files_info
+from schema import schema_get_files_info, schema_get_file_content, schema_write_file, schema_run_python_file
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
@@ -44,6 +44,9 @@ def main():
     available_functions = types.Tool(
     function_declarations=[
         schema_get_files_info,
+        schema_get_file_content,
+        schema_write_file,
+        schema_run_python_file,
     ]
 )  
     generated_content = client.models.generate_content(
@@ -67,4 +70,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
