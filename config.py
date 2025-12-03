@@ -1,6 +1,7 @@
 ##General purpose, static configurations or variables: settings, limits, constants - db creds, API keys
 
 MAX_CHARS = 10000
+MAX_ITERS = 20
 SYSTEM_PROMPT = """
 You are a helpful AI coding agent.
 
